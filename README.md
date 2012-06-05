@@ -1,5 +1,6 @@
 # Gamepad API
 
+Allows you to use gamepads in javascript.
 
 ## Quick start
 
