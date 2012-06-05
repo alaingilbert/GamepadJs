@@ -3,7 +3,7 @@
 
 ## Quick start
 
-```js
+```html
 <script src=".../gamepad.js" type="text/javascript"></script>
 ```
 
