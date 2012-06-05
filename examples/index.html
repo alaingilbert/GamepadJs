@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+<head>
+  <title>Gamepad</title>
+  <script src="../lib/gamepad.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div id="debug"></div>
+
+<script type="text/javascript">
+
+var debug = document.getElementById('debug');
+
+var update = function() {
+  Gamepads.update();
+  var pad = Gamepads.get(0);
+  var str  = 'A: '                  + pad.A                  + '<br />';
+      str += 'B: '                  + pad.B                  + '<br />';
+      str += 'X: '                  + pad.X                  + '<br />';
+      str += 'Y: '                  + pad.Y                  + '<br />';
+      str += 'LEFT_SHOULDER_0: '    + pad.LEFT_SHOULDER_0    + '<br />';
+      str += 'RIGHT_SHOULDER_0: '   + pad.RIGHT_SHOULDER_0   + '<br />';
+      str += 'LEFT_SHOULDER_1: '    + pad.LEFT_SHOULDER_1    + '<br />';
+      str += 'RIGHT_SHOULDER_1: '   + pad.RIGHT_SHOULDER_1   + '<br />';
+      str += 'SELECT: '             + pad.SELECT             + '<br />';
+      str += 'START: '              + pad.START              + '<br />';
+      str += 'LEFT_STICK_BUTTON: '  + pad.LEFT_STICK_BUTTON  + '<br />';
+      str += 'RIGHT_STICK_BUTTON: ' + pad.RIGHT_STICK_BUTTON + '<br />';
+      str += 'UP: '                 + pad.UP                 + '<br />';
+      str += 'DOWN: '               + pad.DOWN               + '<br />';
+      str += 'LEFT: '               + pad.LEFT               + '<br />';
+      str += 'RIGHT: '              + pad.RIGHT              + '<br />';
+      str += 'LEFT_STICK_X: '       + pad.LEFT_STICK_X       + '<br />';
+      str += 'LEFT_STICK_Y: '       + pad.LEFT_STICK_Y       + '<br />';
+      str += 'RIGHT_STICK_X: '      + pad.RIGHT_STICK_X      + '<br />';
+      str += 'RIGHT_STICK_Y: '      + pad.RIGHT_STICK_Y      + '<br />';
+  debug.innerHTML = str;
+  webkitRequestAnimationFrame(update);
+};
+
+update();
+
+</script>
+
+</body>
+</html>
