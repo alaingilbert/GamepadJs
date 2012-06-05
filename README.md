@@ -18,7 +18,8 @@ var pad = Gamepads.get(0);
 
 ```js
 pad.on('stickmove', function(evt) { console.log(evt); });
-// {"button":"RIGHT_STICK_Y","timestamp":1338874409909,"type":"stickmove","x":0.003921627998352051,"y":0.003921627998352051}
+// {"button":"RIGHT_STICK_Y","timestamp":1338874409909,
+// "type":"stickmove","x":0.003921627998352051,"y":0.003921627998352051}
 ```
 
 ### buttondown
