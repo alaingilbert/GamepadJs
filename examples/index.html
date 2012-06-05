@@ -10,14 +10,16 @@
 
 <script type="text/javascript">
 
+document.onclick = function (evt) { console.log(evt); };
+
 var debug = document.getElementById('debug');
 
-Gamepads.update();
 var pad = Gamepads.get(0);
 
 console.log(pad);
 pad.on('buttondown', function (evt) { console.log('ButtonDown', evt); });
 pad.on('buttonup',   function (evt) { console.log('ButtonUp',   evt); });
+pad.on('stickmove',  function (evt) { console.log('StickMove',  evt); });
 
 var update = function() {
   Gamepads.update();
