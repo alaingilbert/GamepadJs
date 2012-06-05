@@ -35,3 +35,7 @@ pad.on('buttondown', function(evt) { console.log(evt); });
 pad.on('buttonup', function(evt) { console.log(evt); });
 // {"button":"A","timestamp":1338873574415,"type":"buttonup"}
 ```
+
+## Author
+
+Alain Gilbert ([@alain_gilbert](https://twitter.com/alain_gilbert))
