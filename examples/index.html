@@ -12,9 +12,15 @@
 
 var debug = document.getElementById('debug');
 
+Gamepads.update();
+var pad = Gamepads.get(0);
+
+console.log(pad);
+pad.on('buttondown', function (evt) { console.log('ButtonDown', evt); });
+pad.on('buttonup',   function (evt) { console.log('ButtonUp',   evt); });
+
 var update = function() {
   Gamepads.update();
-  var pad = Gamepads.get(0);
   var str  = 'A: '                  + pad.A                  + '<br />';
       str += 'B: '                  + pad.B                  + '<br />';
       str += 'X: '                  + pad.X                  + '<br />';
