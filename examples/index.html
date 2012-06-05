@@ -10,7 +10,16 @@
 
 <script type="text/javascript">
 
-document.onclick = function (evt) { console.log(evt); };
+window.requestAnimFrame = (function(){
+  return window.requestAnimationFrame       || // La forme standardisée
+         window.webkitRequestAnimationFrame || // Pour Chrome et Safari
+         window.mozRequestAnimationFrame    || // Pour Firefox
+         window.oRequestAnimationFrame      || // Pour Opera
+         window.msRequestAnimationFrame     || // Pour Internet Explorer
+         function(callback){                   // Pour les élèves du dernier rang
+           window.setTimeout(callback, 1000 / 60);
+         };
+})();
 
 var debug = document.getElementById('debug');
 
@@ -44,7 +53,7 @@ var update = function() {
       str += 'RIGHT_STICK_X: '      + pad.RIGHT_STICK_X      + '<br />';
       str += 'RIGHT_STICK_Y: '      + pad.RIGHT_STICK_Y      + '<br />';
   debug.innerHTML = str;
-  webkitRequestAnimationFrame(update);
+  requestAnimFrame(update);
 };
 
 update();
