@@ -21,14 +21,10 @@ window.requestAnimFrame = (function(){
          };
 })();
 
-var debug = document.getElementById('debug');
 
-var pad = Gamepads.get(0);
+var debug = document.getElementById('debug'),
+    pad = null;
 
-console.log(pad);
-pad.on('buttondown', function (evt) { console.log('ButtonDown', evt); });
-pad.on('buttonup',   function (evt) { console.log('ButtonUp',   evt); });
-pad.on('stickmove',  function (evt) { console.log('StickMove',  evt); });
 
 var update = function() {
   Gamepads.update();
@@ -56,7 +52,21 @@ var update = function() {
   requestAnimFrame(update);
 };
 
-update();
+
+var main = function() {
+  pad = Gamepads.get(0);
+  pad.on('buttondown', function (evt) { console.log('ButtonDown', evt); });
+  pad.on('buttonup',   function (evt) { console.log('ButtonUp',   evt); });
+  pad.on('stickmove',  function (evt) { console.log('StickMove',  evt); });
+  update();
+};
+
+
+if (Gamepads.supported) {
+  main();
+} else {
+  debug.innerHTML = 'GAMEPAD NOT SUPPORTED.';
+}
 
 </script>
 
