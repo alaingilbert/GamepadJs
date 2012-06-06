@@ -36,9 +36,22 @@ pad.A;
 pad.B;
 pad.X;
 pad.Y;
+pad.LEFT_SHOULDER_0;
+pad.RIGHT_SHOULDER_0;
+pad.LEFT_SHOULDER_1;
+pad.RIGHT_SHOULDER_1;
+pad.SELECT;
+pad.START;
+pad.LEFT_STICK_BUTTON;
+pad.LEFT_STICK_BUTTON;
+pad.UP;
+pad.DOWN;
+pad.LEFT;
+pad.RIGHT;
 pad.LEFT_STICK_X;
 pad.LEFT_STICK_Y;
-...
+pad.RIGHT_STICK_X;
+pad.RIGHT_STICK_Y;
 ```
 
 
