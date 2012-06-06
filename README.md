@@ -2,6 +2,8 @@
 
 Allows you to use gamepads in javascript.
 
+![Screen shot 1](http://us.cdn4.123rf.com/168nwm/chisnikov/chisnikov1104/chisnikov110400057/9267738-boitier-de-commande-contour-noir-sur-blanc-bakcground-illustration-vectorielle.jpg)
+
 ## Quick start
 
 ```html
