@@ -15,6 +15,20 @@ var pad = Gamepads.get(0);
 
 ## Events
 
+### connected
+
+```js
+pad.on('connected', function(evt) { console.log(evt); });
+// {"index":0,"timestamp":1338874409909,"type":"connected"}
+```
+
+### disconnected
+
+```js
+pad.on('disconnected', function(evt) { console.log(evt); });
+// {"timestamp":1338874409909,"type":"disconnected"}
+```
+
 ### stickmove
 
 ```js
