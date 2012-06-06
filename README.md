@@ -81,7 +81,7 @@ pad.on('disconnected', function(evt) { console.log(evt); });
 // {"timestamp":1338874409909,"type":"disconnected"}
 ```
 
-### stickmove
+### axismove
 
 ```js
 pad.on('axismove', function(evt) { console.log(evt); });
