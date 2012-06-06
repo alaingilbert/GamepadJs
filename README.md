@@ -12,6 +12,35 @@ Allows you to use gamepads in javascript.
 var pad = Gamepads.get(0);
 ```
 
+## Properties
+
+All the buttons/joystick states are accessible like this:
+
+Get a button state. (replace X by a number)
+
+```js
+pad.BUTTON_X;
+```
+
+Get a joystick state. (replace X by a number)
+
+```js
+pad.AXE_X;
+```
+
+
+If the gamepad is known, you can access it with some user friendly names:
+
+```js
+pad.A;
+pad.B;
+pad.X;
+pad.Y;
+pad.LEFT_STICK_X;
+pad.LEFT_STICK_Y;
+...
+```
+
 
 ## Events
 
