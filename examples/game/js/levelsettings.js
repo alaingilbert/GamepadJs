@@ -44,18 +44,23 @@ LevelSettings.prototype.render = function() {
   c.save();
 
   c.font = '20px sans-serif';
+  c.textAlign = 'center';
   switch (this.step) {
     case 0:
-      c.fillText('Set your LEFT button.', 100, 100);
+      c.fillText('Set your LEFT button.', Game.canvas.width/2, Game.canvas.height/2 - 20);
+      c.fillText('(Waiting for player interaction)', Game.canvas.width/2, Game.canvas.height/2 + 20);
       break;
     case 1:
-      c.fillText('Set your RIGHT button.', 100, 100);
+      c.fillText('Set your RIGHT button.', Game.canvas.width/2, Game.canvas.height/2 - 20);
+      c.fillText('(Waiting for player interaction)', Game.canvas.width/2, Game.canvas.height/2 + 20);
       break;
     case 2:
-      c.fillText('Set your UP button.', 100, 100);
+      c.fillText('Set your UP button.', Game.canvas.width/2, Game.canvas.height/2 - 20);
+      c.fillText('(Waiting for player interaction)', Game.canvas.width/2, Game.canvas.height/2 + 20);
       break;
     case 3:
-      c.fillText('Set your DOWN button.', 100, 100);
+      c.fillText('Set your DOWN button.', Game.canvas.width/2, Game.canvas.height/2 - 20);
+      c.fillText('(Waiting for player interaction)', Game.canvas.width/2, Game.canvas.height/2 + 20);
       break;
     case 4:
       c.fillText('CONGRATS', 100, 100);
