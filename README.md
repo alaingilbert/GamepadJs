@@ -12,6 +12,14 @@ Allows you to use gamepads in javascript.
 var pad = Gamepads.get(0);
 ```
 
+In the game loop, you have to put the following command.
+
+It will update the state of all the connected gamepads.
+
+```js
+Gamepads.update();
+```
+
 ## Properties
 
 All the buttons/joystick states are accessible like this:
