@@ -22,15 +22,15 @@ Gamepads.update();
 
 ## Properties
 
-All the buttons/joystick states are accessible like this:
+All the buttons/joysticks states are accessible like this:
 
-Get a button state. (replace X by a number) In the range [0..1]
+Get a button state (replace X by a number). Return a value in the range [0..1]
 
 ```js
 pad.BUTTON_X;
 ```
 
-Get a joystick state. (replace X by a number) In the range [-1..1]
+Get a joystick state (replace X by a number). Return a value in the range [-1..1]
 
 ```js
 pad.AXE_X;
