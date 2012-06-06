@@ -84,9 +84,9 @@ pad.on('disconnected', function(evt) { console.log(evt); });
 ### stickmove
 
 ```js
-pad.on('stickmove', function(evt) { console.log(evt); });
-// {"button":"RIGHT_STICK","timestamp":1338874409909,
-// "type":"stickmove","x":0.003921627998352051,"y":0.003921627998352051}
+pad.on('axismove', function(evt) { console.log(evt); });
+// {"button":"RIGHT_STICK_X","timestamp":1338874409909,
+// "type":"axismove","value":0.003921627998352051}
 ```
 
 ### buttondown

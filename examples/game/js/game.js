@@ -7,27 +7,34 @@ Game.init = function() {
   Game.background = new Background();
   Game.player = new Player();
   Game.pad = Gamepads.get(0);
-  Game.States = {BIND_KEYS: 0, GAME: 1};
-  Game.state = Game.States.BIND_KEYS;
+  Game.States = {BIND_KEYS: 0, GAME: 1, UNSUPPORTED: 2};
   Game.lastFrame = new Date().getTime();
 
   Game.Controls = {LEFT: null, RIGHT: null, UP: null, DOWN: null};
 
-  Game.levelSettings = new LevelSettings();
+  if (Gamepads.supported) {
+    Game.levelSettings = new LevelSettings();
+    Game.state = Game.States.BIND_KEYS;
+  } else {
+    Game.state = Game.States.UNSUPPORTED;
+  }
 
   Game.cycle();
 };
 
 
 Game.update = function(deltaTime) {
-  Gamepads.update();
   switch (Game.state) {
     case Game.States.BIND_KEYS:
+      Gamepads.update();
       Game.levelSettings.update(deltaTime);
       break;
     case Game.States.GAME:
+      Gamepads.update();
       Game.background.update(deltaTime);
       Game.player.update(deltaTime);
+      break;
+    case Game.States.UNSUPPORTED:
       break;
   }
 };
@@ -45,6 +52,12 @@ Game.render = function() {
     case Game.States.GAME:
       Game.background.render();
       Game.player.render();
+      break;
+    case Game.States.UNSUPPORTED:
+      c.textAlign = 'center';
+      c.font = '20px sans-serif';
+      c.fillText('Your browser does not support html5 gamepads api.',
+          Game.canvas.width/2, Game.canvas.height/2);
       break;
   }
 
