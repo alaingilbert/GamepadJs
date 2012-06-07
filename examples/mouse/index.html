@@ -1,0 +1,298 @@
+<!doctype html>
+<html>
+<head>
+  <title>Mouse example</title>
+  <script src="../../lib/gamepad.js" type="text/javascript"></script>
+  <style>
+    html, body {
+      cursor: none;
+    }
+    #cursor {
+      background-image: url('pointer.png');
+      width: 14px;
+      height: 20px;
+      position: fixed;
+      top: 100px;
+      left: 100px;
+    }
+  </style>
+</head>
+<body>
+
+
+<div id="cursor"></div>
+
+<div>
+  <input type="checkbox" id="ckb1" /><label for="ckb1">Checkbox 1</label><br />
+  <input type="checkbox" id="ckb2" /><label for="ckb2">Checkbox 2</label><br />
+  <input type="checkbox" id="ckb3" /><label for="ckb3">Checkbox 3</label><br />
+</div>
+<br />
+<a href="#" onclick="alert('Click link 1');">Link 1</a><br />
+<a href="#" onclick="alert('Click link 2');">This is a longer link</a><br />
+<a href="#" onclick="alert('Click link 3');">Link 3</a><br />
+
+
+<script type="text/javascript">
+window.requestAnimFrame = (function(){
+  return window.requestAnimationFrame       || // La forme standardisée
+         window.webkitRequestAnimationFrame || // Pour Chrome et Safari
+         window.mozRequestAnimationFrame    || // Pour Firefox
+         window.oRequestAnimationFrame      || // Pour Opera
+         window.msRequestAnimationFrame     || // Pour Internet Explorer
+         function(callback){                   // Pour les élèves du dernier rang
+           window.setTimeout(callback, 1000 / 60);
+         };
+})();
+
+
+// Div that represent our cursor.
+var cursor = document.getElementById('cursor');
+cursor.style.left = '100px';
+cursor.style.top = '100px';
+
+var lastFrame = new Date().getTime();
+var pad = Gamepads.get(0);
+var velocity = 400;
+
+
+// Gets all the clickable elements.
+var getElements = function() {
+  var links = document.getElementsByTagName('a');
+  var inputs = document.getElementsByTagName('input');
+  var labels = document.getElementsByTagName('label');
+
+  links = Array.prototype.slice.call(links);
+  inputs = Array.prototype.slice.call(inputs);
+  labels = Array.prototype.slice.call(labels);
+
+  return inputs.concat(links).concat(labels);
+};
+
+// Contains all the clickable elements.
+var elements = getElements();
+
+
+pad.on('buttondown', function(evt) {
+  // Current position.
+  var currentX = cursor.style.left.substr(0, cursor.style.left.length - 2);
+  var currentY = cursor.style.top.substr(0, cursor.style.top.length - 2);
+
+  var over = null;
+
+
+  // Verify if we are over a clickable element.
+  for (var i = 0; i < elements.length; i++) {
+    var el = elements[i];
+    var pos = getElementAbsolutePos(el);
+    if (currentX >= pos.x && currentX <= pos.x + pos.w &&
+        currentY >= pos.y && currentY <= pos.y + pos.h)
+    {
+      over = el;
+      break;
+    }
+  }
+
+
+  // We are over a clickable element, generate a click on it.
+  if (over) {
+    var evt1 = document.createEvent('MouseEvents');
+    evt1.initMouseEvent('click', true, true, document.defaultView, 1,
+        currentX, currentY, currentX, currentY,
+        false, false, false, false, 0, over);
+    over.dispatchEvent(evt1);
+  }
+});
+
+
+var update = function(deltaTime) {
+  Gamepads.update();
+
+  // Update the fake cursor position.
+  var currentX = cursor.style.left.substr(0, cursor.style.left.length - 2);
+  var currentY = cursor.style.top.substr(0, cursor.style.top.length - 2);
+  var newX = parseFloat(currentX) + pad.LEFT_STICK_X * deltaTime/1000 * velocity;
+  var newY = parseFloat(currentY) + pad.LEFT_STICK_Y * deltaTime/1000 * velocity;
+  if (newX < 0) { newX = 0; }
+  if (newY < 0) { newY = 0; }
+  cursor.style.left = newX + 'px';
+  cursor.style.top = newY + 'px';
+};
+
+
+var render = function() {
+};
+
+
+// The game loop.
+var cycle = function() {
+  var deltaTime = new Date().getTime() - lastFrame;
+  update(deltaTime);
+  render();
+  lastFrame = new Date().getTime();
+  requestAnimFrame(cycle);
+};
+
+
+// If we support gamepad, start cycle.
+if (Gamepads.supported) {
+  cycle();
+} else {
+  alert('Your browser does not support html5 gamepads.');
+}
+
+
+
+// The code below is from this website.
+// It gets the position and dimension of an element.
+// http://blogs.korzh.com/progtips/2008/05/28/absolute-coordinates-of-dom-element-within-document.html
+function __getIEVersion() {
+    var rv = -1; // Return value assumes failure.
+    if (navigator.appName == 'Microsoft Internet Explorer') {
+        var ua = navigator.userAgent;
+        var re = new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})");
+        if (re.exec(ua) != null)
+            rv = parseFloat(RegExp.$1);
+    }
+    return rv;
+}
+
+function __getOperaVersion() {
+    var rv = 0; // Default value
+    if (window.opera) {
+        var sver = window.opera.version();
+        rv = parseFloat(sver);
+    }
+    return rv;
+}
+
+var __userAgent = navigator.userAgent;
+var __isIE =  navigator.appVersion.match(/MSIE/) != null;
+var __IEVersion = __getIEVersion();
+var __isIENew = __isIE && __IEVersion >= 8;
+var __isIEOld = __isIE && !__isIENew;
+
+var __isFireFox = __userAgent.match(/firefox/i) != null;
+var __isFireFoxOld = __isFireFox && ((__userAgent.match(/firefox\/2./i) != null) || (__userAgent.match(/firefox\/1./i) != null));
+var __isFireFoxNew = __isFireFox && !__isFireFoxOld;
+
+var __isWebKit =  navigator.appVersion.match(/WebKit/) != null;
+var __isChrome =  navigator.appVersion.match(/Chrome/) != null;
+var __isOpera =  window.opera != null;
+var __operaVersion = __getOperaVersion();
+var __isOperaOld = __isOpera && (__operaVersion < 10);
+
+function __parseBorderWidth(width) {
+    var res = 0;
+    if (typeof(width) == "string" && width != null && width != "" ) {
+        var p = width.indexOf("px");
+        if (p >= 0) {
+            res = parseInt(width.substring(0, p));
+        }
+        else {
+        //do not know how to calculate other values (such as 0.5em or 0.1cm) correctly now
+        //so just set the width to 1 pixel
+            res = 1; 
+        }
+    }
+    return res;
+}
+
+
+//returns border width for some element
+function __getBorderWidth(element) {
+  var res = new Object();
+  res.left = 0; res.top = 0; res.right = 0; res.bottom = 0;
+  if (window.getComputedStyle) {
+    //for Firefox
+    var elStyle = window.getComputedStyle(element, null);
+    res.left = parseInt(elStyle.borderLeftWidth.slice(0, -2));  
+    res.top = parseInt(elStyle.borderTopWidth.slice(0, -2));  
+    res.right = parseInt(elStyle.borderRightWidth.slice(0, -2));  
+    res.bottom = parseInt(elStyle.borderBottomWidth.slice(0, -2));  
+  }
+  else {
+    //for other browsers
+    res.left = __parseBorderWidth(element.style.borderLeftWidth);
+    res.top = __parseBorderWidth(element.style.borderTopWidth);
+    res.right = __parseBorderWidth(element.style.borderRightWidth);
+    res.bottom = __parseBorderWidth(element.style.borderBottomWidth);
+  }
+   
+  return res;
+}
+
+
+//returns the absolute position of some element within document
+function getElementAbsolutePos(elemID) {
+  var element;
+  if (typeof(elemID) == "string") {
+    element = document.getElementById(elemID);
+  }
+  else {
+    element = elemID;
+  }
+
+  var res = new Object();
+  res.x = 0; res.y = 0;
+  if (element !== null) {
+      res.x = element.offsetLeft;
+
+    var offsetParent = element.offsetParent;
+    var offsetParentTagName = offsetParent != null ? offsetParent.tagName.toLowerCase() : "";
+
+        if (__isIENew  && offsetParentTagName == 'td') {
+        res.y = element.scrollTop;
+    }
+    else {
+        res.y = element.offsetTop;
+    }
+      
+    var parentNode = element.parentNode;
+    var borderWidth = null;
+
+    while (offsetParent != null) {
+      res.x += offsetParent.offsetLeft;
+      res.y += offsetParent.offsetTop;
+      
+      var parentTagName = offsetParent.tagName.toLowerCase(); 
+
+      if ((__isIEOld && parentTagName != "table") || (__isFireFoxNew && parentTagName == "td")  || __isChrome) {        
+        borderWidth = __getBorderWidth(offsetParent);
+        res.x += borderWidth.left;
+        res.y += borderWidth.top;
+      }
+        
+      if (offsetParent != document.body && offsetParent != document.documentElement) {
+        res.x -= offsetParent.scrollLeft;
+        res.y -= offsetParent.scrollTop;
+      }
+
+
+      //next lines are necessary to fix the problem with offsetParent
+        if (!__isIE && !__isOperaOld || __isIENew) {
+          while (offsetParent != parentNode && parentNode !== null) {
+          res.x -= parentNode.scrollLeft;
+          res.y -= parentNode.scrollTop;
+          if (__isFireFoxOld || __isWebKit) {
+            borderWidth = __getBorderWidth(parentNode);
+            res.x += borderWidth.left;
+            res.y += borderWidth.top;
+          }
+            parentNode = parentNode.parentNode;
+          }    
+      }
+
+        parentNode = offsetParent.parentNode;
+        offsetParent = offsetParent.offsetParent;
+    }
+  }
+  res.w = element.offsetWidth;
+  res.h = element.offsetHeight;
+  return res;
+}
+</script>
+
+
+</body>
+</html>
